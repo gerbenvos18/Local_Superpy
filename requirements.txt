@@ -1,0 +1,60 @@
+## Lijst met requirements waar het programma aan moet voldoen:
+
+- Command line tool genaamd SuperPy
+- SuperPy programma wat de inventory van een supermarkt weergeeft
+- Core function: keeping track and producing reports:
+    - Welke producten de supermarkt heeft
+    - Welke voorraad van een product de supermarkt heeft
+    - De inkoop prijs van het product en de houdbaarheidsdatum
+    - Verkoopprijs OF als t.h.t datum is verlopen het feit dat het over de datum is
+
+    - Alle data moet in CSV files staan 
+    - Eigen data structuur maar er is een voorbeeld:
+    - bought.csv -> id,product_name,buy_date,buy_price,expiration_date
+    - sold.csv -> id,bought_id,sell_date,sell_price -> id is hier een integer 
+
+    - programma moet weten wat de huidige datum het is 
+    - tijd mag/moet opgeslagen zijn in een simpel text bestand
+    - tijd moet met een command als "$ python super.py --advance-time 2" twee dagen naar de toekomst kunnen
+    - Dit om te kijken of bijvoorbeeld over de datum gaat
+
+    - interactie via command line zie sample_terminal voor hoe dit eruit zou moeten zien.
+
+    - Wees creatief 
+
+    Minimaal:
+
+    1. Goed gestructureerde code
+        -   Duidelijke variabelen, functies etc
+        -   Gebruik van comments wanneer nodig
+        -   Splitsen van de code in duidelijke blokken en/of files
+
+    2. Gebruik van modules:
+        -   csv
+        -   argparse
+        -   datetime, met strftime, strptime en timedelta
+
+    3. Data staat in CSV bestanden 
+
+    4. User friendly CLI met overal een --help sectie
+
+    5. Txt file met read me guide en aantal voorbeelden
+
+    6. Harde losse voorwaarden:
+        - De datum kunnen instellen dat het programma ziet als huidige datum
+        - Vastleggen kopen en verkopen producten op datums
+        - Rapporteren over omzet en winst over gespecificeerde tijdsperioden
+        - Exporteren selecties van data naar CSV files.
+    
+    7. Kies twee van de volgende 4 dingen:
+        - Gebruik van de module rich.
+        - Het import/exporteren van rapporteren van/naar formats naast CSV.
+        - Visualiseren van data met Matplotlib.
+        - Een andere zelf bedachte feature.
+
+    8. Afronding:
+        - Voeg een klein rapport van 300 woorden to dat 3 technische elementen van je programma die noemenswaardig zijn.
+        - Leg uit welk probleem ze oplossen en waarom je zo hebt geimplementeerd
+        - Dit verslag inleveren als report.md 
+        - Je mag markdown gebruiken om de report mooi weer te geven. 
+
