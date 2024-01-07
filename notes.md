@@ -29,3 +29,10 @@ Aanpak in stappen:
  2. Artikel toevoegen in een line als class 
  3. Daarna werken aan het verkopen van de artikelen
  4. Daarna met de tijd gaan werken om die toe te voegen aan de commando's
+
+-  Default tijd is huidige tijd 
+ Tijd is bij opstarten default kan vooruit, terug maar ook naar huidige tijd worden gezet.
+
+- Report in terminal en naar csv bestanden
+
+- Gebruik maken van rich-argparse

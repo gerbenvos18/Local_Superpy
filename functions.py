@@ -5,6 +5,9 @@ from datetime import datetime
 
 # Voorbeeld functie om op juiste manier te testen:
 
+def superpy_parser():
+    pass
+
 def addition(number_1 =4, number_2 =6):
     return number_1 + number_2
 
