@@ -1,1 +1,2 @@
-id,bought_id,sell_date,sell_price
+id;bought_id;product_name;qty;sell_date;sell_price
+1;6;Hamburger;7;5-1-2024;3
