@@ -21,6 +21,7 @@ def main():
     subparser = parser.add_subparsers(dest="command")
       
 # Commando report:
+    # $ python -m main report inventory
     # $ python -m main report -h
     report_parser = subparser.add_parser("report", help="Various kinds of reports", formatter_class=RichHelpFormatter)
     report_parser.add_argument("form", type=str, help="inventory, revenue")
