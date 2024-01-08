@@ -3,8 +3,10 @@ import csv
 from datetime import date
 from functions import *
 from rich_argparse import RichHelpFormatter
+
 # $python -m terminal_example -h
 # How to do a recursive sub-folder search and return files in a list? Stack Overflow
+
 RichHelpFormatter.styles["argparse.text"] = "green"
 
 parser = ArgumentParser(description="Hello you're using superpy!", 
