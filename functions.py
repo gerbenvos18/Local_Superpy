@@ -25,9 +25,10 @@ def report_inventory():
         reader = csv.reader(file)
         next(reader)
         for line in reader:
-                    table.add_row(str(line))
+                table.add_row(str(line))
         console = Console()
         console.print(table)
+        print(type(line))
     return
 
 def report_revenue():
