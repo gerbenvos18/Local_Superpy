@@ -7,3 +7,9 @@ from functions import *
 
 def test_addition():
     assert addition(5, 5) == 10
+
+def test_report_inventory():
+    report_inventory()
+    return
+
+test_report_inventory()
