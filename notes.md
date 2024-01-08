@@ -36,3 +36,5 @@ Aanpak in stappen:
 - Report in terminal en naar csv bestanden
 
 - Gebruik maken van rich-argparse
+
+- Als modules niet herkent worden: controleer welke interpreter je gebruikt: cntrl+shift+p

@@ -1,6 +1,6 @@
 # Functies gebruikt in main
 
-import csv, rich, argparse
+import csv, argparse
 from datetime import datetime
 
 # Voorbeeld functie om op juiste manier te testen:
