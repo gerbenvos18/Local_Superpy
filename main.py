@@ -20,26 +20,27 @@ def main():
     subparser = parser.add_subparsers(dest="command")
       
 # Commando report:
-    
+    # $ python -m main.py report inventory
     report_parser = subparser.add_parser("report", help="Various kinds of reports")
-    report_parser.add_argument("report form", type=str, help="Specify the type of report you wish to see")
+    report_parser.add_argument("report_form", type=str, help="Specify the type of report you wish to see")
     
     buy_parser = subparser.add_parser("buy", help="Add item to the store")
-    buy_parser.add_argument("buy item", type=str, help="Specify the item, price, date and the bbd")
+    buy_parser.add_argument("buy_item", type=str, help="Specify the item, price, date and the bbd")
 
     sell_parser = subparser.add_parser("sell", help="Sell item from the store")
-    sell_parser.add_argument("sell item", type=str, help="Specify the item, price date and bbd")
+    sell_parser.add_argument("sell_item", type=str, help="Specify the item, price date and bbd")
     
     time_parser = subparser.add_parser("time", help="Set the date used by the sytem")
-    time_parser.add_argument("set date", type=str, help="Set date in format: Y-M-D / 2020-10-05")
+    time_parser.add_argument("set_date", type=str, help="Set date in format: Y-M-D / 2020-10-05")
 
     args = parser.parse_args()
 
 
 # Oproepen commando's
     if args.command == "report":
-        outcome = None
-        pass
+        if args.report_form == "inventory":
+            outcome = report_inventory()
+    
 
     
 

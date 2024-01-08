@@ -25,7 +25,6 @@ def report_inventory():
     table.add_column("Price", header_style="yellow")
     table.add_column("Expiration_date", header_style="yellow")
 
-
     with open('inventory.csv', 'r') as file:
         reader = csv.DictReader(file, delimiter=";")
         for row in reader:
@@ -38,7 +37,6 @@ def report_inventory():
 
         console = Console()
         console.print(table)
-
     return
 
 def report_revenue():
@@ -56,13 +54,3 @@ def buy_article():
 def set_time():
     pass
 
-report_inventory()
-"""
-    with open('inventory.csv', 'r') as file:
-        reader = csv.DictReader(file, delimiter=";")
-        for line in reader:
-            print(line['id'], line["product_name"])
-        
-        
-        console = Console()
-        console.print(table)"""
