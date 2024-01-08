@@ -12,6 +12,7 @@ __human_name__ = "superpy"
 # Your code below this line.
 
 def main():
+    # $ python -m main -h
     parser = ArgumentParser(description="Hello you're using superpy!", 
                             epilog="use -h for more information",
                             add_help=f"This is a CLI tool to check, change and report about our inventory."
@@ -20,10 +21,10 @@ def main():
     subparser = parser.add_subparsers(dest="command")
       
 # Commando report:
-    # $ python -m main.py report inventory
-    report_parser = subparser.add_parser("report", help="Various kinds of reports")
-    report_parser.add_argument("report_form", type=str, help="Specify the type of report you wish to see")
-    
+    # $ python -m main report -h
+    report_parser = subparser.add_parser("report", help="Various kinds of reports", formatter_class=RichHelpFormatter)
+    report_parser.add_argument("form", type=str, help="inventory, revenue")
+
     buy_parser = subparser.add_parser("buy", help="Add item to the store")
     buy_parser.add_argument("buy_item", type=str, help="Specify the item, price, date and the bbd")
 
@@ -38,13 +39,11 @@ def main():
 
 # Oproepen commando's
     if args.command == "report":
-        if args.report_form == "inventory":
-            outcome = report_inventory()
-    
-
-    
-
-    return
+        if args.form == "inventory":
+            report_inventory()
+        if args.form == "revenue":
+            report_revenue()
+        pass
 
 if __name__ == "__main__":
     main()

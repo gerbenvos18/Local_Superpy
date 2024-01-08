@@ -18,12 +18,12 @@ def addition(number_1 =4, number_2 =6):
 def report_inventory():
 
     table = Table(title=Panel("[blue bold]Current Inventory",), show_header=True)
-    table.add_column("Id", header_style="yellow")
-    table.add_column("Product", header_style="yellow")
+    table.add_column("Id", header_style="yellow",justify="right")
+    table.add_column("Product", header_style="yellow", justify="center")
     table.add_column("Qty", header_style="yellow")
-    table.add_column("Buy_date", header_style="yellow")    
-    table.add_column("Price", header_style="yellow")
-    table.add_column("Expiration_date", header_style="yellow")
+    table.add_column("Buy_date", header_style="yellow", justify="center")    
+    table.add_column("Price €", header_style="yellow")
+    table.add_column("Expiration_date", header_style="yellow", justify="center")
 
     with open('inventory.csv', 'r') as file:
         reader = csv.DictReader(file, delimiter=";")
@@ -40,6 +40,10 @@ def report_inventory():
     return
 
 def report_revenue():
+    table = Table(title=Panel("[blue bold]Revenue of today",), show_header=True)
+    table.add_column("Mare Lore Ipsum", header_style="yellow")
+    console = Console()
+    console.print(table)
     pass
 
 def report_profit():
