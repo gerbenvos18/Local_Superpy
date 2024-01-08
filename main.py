@@ -3,17 +3,20 @@ from argparse import *
 import csv
 from datetime import date
 from functions import *
+from rich_argparse import RichHelpFormatter
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
 __human_name__ = "superpy"
 
 # Your code below this line.
+
 def main():
     parser = ArgumentParser(description="Hello you're using superpy!", 
                             epilog="use -h for more information",
                             add_help=f"This is a CLI tool to check, change and report about our inventory."
-                                     f"See the readme for more information about its usage.")
+                                     f"See the readme for more information about its usage.",
+                                     formatter_class=RichHelpFormatter)
     subparser = parser.add_subparsers(dest="command")
       
 # Commando report:

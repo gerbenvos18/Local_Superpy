@@ -49,3 +49,11 @@ And now back to [the first link][another place].
 >"Blockquotes"
 
 Flour,cheese,tomatoes
+
+
+rich_argparse     formatter	equivalent in   argparse
+RichHelpFormatter	                        HelpFormatter
+RawDescriptionRichHelpFormatter	            RawDescriptionHelpFormatter
+RawTextRichHelpFormatter	                RawTextHelpFormatter
+ArgumentDefaultsRichHelpFormatter	        ArgumentDefaultsHelpFormatter
+MetavarTypeRichHelpFormatter	            MetavarTypeHelpFormatter
