@@ -14,22 +14,22 @@ def addition(number_1 =4, number_2 =6):
     return number_1 + number_2
 
 def report_inventory():
+
     table = Table(title="Current Inventory", show_header=True, title_style="green bold italic")
     table.add_column("Id", header_style="yellow")
     table.add_column("Product", header_style="yellow")
     table.add_column("Qty", header_style="yellow")
-    table.add_column("Buy_date", header_style="yellow")
+    table.add_column("Buy_date", header_style="yellow")    
     table.add_column("Price", header_style="yellow")
 
     with open('inventory.csv', 'r') as file:
-        reader = csv.reader(file)
-        next(reader)
+        reader = csv.DictReader(file, delimiter=";")
         for line in reader:
-            for items in line:
-                table.add_row(items)
+            print(line['id'])
+        
         console = Console()
         console.print(table)
-        print(type(items))
+
     return
 
 def report_revenue():
@@ -48,3 +48,4 @@ def set_time():
     pass
 
 report_inventory()
+
