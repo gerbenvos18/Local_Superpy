@@ -26,7 +26,7 @@ def main():
     # $ python -m main report inventory
     # $ python -m main report -h
     report_parser = subparser.add_parser("report", help="Various kinds of reports", formatter_class=RichHelpFormatter)
-    report_parser.add_argument("format", type=str, help="inventory, revenue")
+    report_parser.add_argument("format", type=str, help="inventory, revenue, profit")
 
     buy_parser = subparser.add_parser("buy", help="Add item to the store")
     buy_parser.add_argument("buy_item", type=str, help="Specify the item, price, date and the bbd")
@@ -53,4 +53,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
+    buy_article()
