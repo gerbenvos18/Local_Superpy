@@ -24,7 +24,7 @@ $ python super.py report inventory --yesterday
 $ python super.py sell --product-name orange --price 2
 OK
 
-$ python super.py report inventory --now
+x$ python super.py report inventory --now
 +--------------+-------+-----------+-----------------+
 | Product Name | Count | Buy Price | Expiration Date |
 +==============+=======+===========+=================+

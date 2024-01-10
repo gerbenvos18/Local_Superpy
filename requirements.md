@@ -15,8 +15,8 @@
 ## Deel CSV
 
 1. Welke producten de supermarkt heeft
-2. Welke voorraad van een product de supermarkt heeft
-3. De inkoop prijs van het product en de houdbaarheidsdatum
+2. Welke voorraad van een product de supermarkt heeft  x
+3. De inkoop prijs van het product en de houdbaarheidsdatum 
 4. Verkoopprijs OF als t.h.t datum is verlopen het feit dat het over de datum is
 5. Alle data moet in CSV files staan 
 6. Eigen data structuur maar er is een voorbeeld:
