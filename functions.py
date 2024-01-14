@@ -1,9 +1,11 @@
 # Functies gebruikt in main
 
+import main
 import csv, argparse
 import datetime
+#import test_functions
 import test_functions
-import main
+
 from rich.console import Console
 from rich.table import Table
 from rich import print
@@ -27,7 +29,7 @@ example_article = Article(name="Orange", price=2, qty=4, shelf_life=14)
 
 ## Various time functions:
 
-def change_date(days):                      #Used to forward or backward time
+def change_date(days):                      #Used to set the date
     with open('time.txt', 'r') as file:
         current_date = file.readline()
 
@@ -61,7 +63,7 @@ def set_current_date():                     #Used to set date back to current da
 
 def report_inventory():
 
-    table = Table(title=Panel("[blue bold]Current Inventory",), show_header=True)
+    table = Table(title=Panel(f"[blue bold]Inventory - {today_formatted}",), show_header=True)
     table.add_column("Product", header_style="yellow", justify="center")
     table.add_column("Purchase_€", header_style="yellow")
     table.add_column("Qty", header_style="yellow")
@@ -89,6 +91,11 @@ def report_revenue():
     pass
 
 def buy_article():
+    
+    pass
+
+    
+"""def buy_article():
     with open('inventory.csv', 'r') as file:
         reader = csv.reader(file, delimiter=";")
         article_id = sum(1 for row in reader)
@@ -104,7 +111,7 @@ def buy_article():
             "buy_price": example_article.price,
             "expiration_date": expire_date(example_article.shelf_life)
         })
-        return
+        return"""
     
 def report_profit():
     pass

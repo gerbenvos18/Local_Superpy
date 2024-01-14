@@ -1,9 +1,10 @@
 import pytest
 import argparse
 import functions
-from functions import *
 import datetime
 import csv
+import main
+from functions import *
 
 
 # Terminal invoer voor pytest: 
@@ -15,6 +16,8 @@ import csv
 def test_class():
     print(f"Name: {example_article.name}, Price: {example_article.price}, "
             f"Qty: {example_article.price}, Shelf_life: {example_article.shelf_life}, "
-            f"Purchase date: {getattr(Article, "buy_date")}")
+           f"Purchase date: {getattr(Article, "buy_date")}")
     return
 #test_class()
+
+#print(today_formatted)
