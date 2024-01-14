@@ -33,6 +33,8 @@ def main():
     # $ python -m main report -h
     # $ python -m main buy Grape 1.50 14 8
 
+    # Idee weggooien van alle artikelen die over de datum zijn 
+
     report_parser = subparser.add_parser("report", help="Report about current inventory", formatter_class=RichHelpFormatter)
 
     buy_parser = subparser.add_parser("buy", help="Add item to the store, specify item, price, amount and bbd")

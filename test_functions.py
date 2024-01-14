@@ -9,9 +9,9 @@ from rich.console import Console
 "$ python -m pytest"
 "18,Grapes,200,14-01-2024,1.5,22-01-2024"
 
-verkocht = 18
-prijs = 4.00
-aantal = 9
+verkocht = 8
+prijs = 12.00
+aantal = 10
 # id;product_name;quantity;sales_price;expiration_date
 
 
@@ -25,7 +25,7 @@ def sell_article():
     # Aanpassen id,product_name,quantity,buy_price,sales_price,expiration_date
         for row in rows:
             if row["id"] == str(verkocht):
-                if int(row["quantity"]) >= aantal:
+                if int(row["quantity"]) > aantal:
                     row["quantity"] = int(row['quantity']) - aantal
                     print(f"You've sold {aantal} {row["product_name"]}")
                     sales_append = {"id": row["id"],
@@ -37,8 +37,8 @@ def sell_article():
                                     "expiration_date": row["expiration_date"]}
                     break
 
-                if aantal > int(row['quantity']):
-                    print(f"You've sold whats left: {row['quantity']}")
+                if aantal >= int(row['quantity']):
+                    print(f"You've sold the last amount of {row['product_name']}: {row['quantity']}")
                     sales_append = {"id": row["id"],
                                     "product_name": row["product_name"],
                                     "quantity": row['quantity'],
@@ -65,4 +65,4 @@ def sell_article():
     
     return
 
-#sell_article()
+sell_article()
