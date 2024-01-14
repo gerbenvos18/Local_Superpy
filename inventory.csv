@@ -16,3 +16,4 @@ id;product_name;quantity;buy_date;buy_price;expiration_date
 15;Pear;18;5-1-2024;0.75;26-1-2024
 16;Orange;4;11-01-2024;2;24-01-2024
 17;Apple;10;14-01-2024;1.5;20-01-2024
+18;Grape;14;14-01-2024;1.5;18-01-2024

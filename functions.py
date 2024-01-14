@@ -1,10 +1,7 @@
 # Functies gebruikt in main
 
-import main
-import csv, argparse
+import csv
 import datetime
-#import test_functions
-import test_functions
 
 from rich.console import Console
 from rich.table import Table
@@ -61,7 +58,7 @@ def set_current_date():                     #Used to set date back to current da
 
 ## Functions to change the inventory and report about it
 
-def report_inventory():
+"""def report_inventory():
 
     table = Table(title=Panel(f"[blue bold]Inventory - {today_formatted}",), show_header=True)
     table.add_column("Product", header_style="yellow", justify="center")
@@ -81,18 +78,14 @@ def report_inventory():
 
         console = Console()
         console.print(table)
-    return
+    return"""
 
-def report_revenue():
+"""def report_revenue():
     table = Table(title=Panel("[blue bold]Revenue of today",), show_header=True)
     table.add_column("Mare Lore Ipsum", header_style="yellow")
     console = Console()
     console.print(table)
-    pass
-
-def buy_article():
-    
-    pass
+    pass"""
 
     
 """def buy_article():

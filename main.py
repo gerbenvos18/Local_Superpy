@@ -4,6 +4,7 @@ import csv
 from datetime import date
 from functions import *
 from rich_argparse import RichHelpFormatter
+from rich.pretty import pprint
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -25,10 +26,9 @@ def main():
 # Commando report:
     # $ python -m main report inventory
     # $ python -m main report -h
-    # $ python -m main buy orange 1.50 20
+    # $ python -m main buy Grape 1.50 14 8
 
     report_parser = subparser.add_parser("report", help="Report about current inventory", formatter_class=RichHelpFormatter)
-    #report_parser.add_argument("format", type=str, help="")
 
     buy_parser = subparser.add_parser("buy", help="Add item to the store, specify item, price, amount and bbd")
     buy_parser.add_argument("item", type=str, help="Name of the article")
@@ -39,22 +39,40 @@ def main():
     sell_parser = subparser.add_parser("sell", help="Sell item from the store")
     sell_parser.add_argument("sell_item", type=str, help="Specify the item, price date and bbd")
     
+    revenue_parser = subparser.add_parser("revenue", help="Report revenue given period")
+    profit_parser = subparser.add_parser("profit", help="Report profit given period")
+
     time_parser = subparser.add_parser("time", help="Set the date used by the sytem")
     time_parser.add_argument("set_date", type=str, help="Set date in format: Y-M-D / 2020-10-05")
-
-    revenue_parser = subparser.add_parser("revenue", help="Report revenue given period")
-
-    profit_parser = subparser.add_parser("profit", help="Report profit given period")
 
     args = parser.parse_args()
 
 
-# Oproepen commando's
+    ## Command Report 
+
     if args.command == "report":
-        report_inventory()
+        table_inventory = Table(title=Panel(f"[blue bold]Inventory - {today_formatted}",), show_header=True)
+        table_inventory.add_column("Product", header_style="yellow", justify="center")
+        table_inventory.add_column("Purchase_€", header_style="yellow")
+        table_inventory.add_column("Qty", header_style="yellow")
+        table_inventory.add_column("Expiration_date", header_style="yellow", justify="center")
+        table_inventory.add_column("Id", header_style="yellow",justify="right")
+
+        with open('inventory.csv', 'r') as file:
+            reader = csv.DictReader(file, delimiter=";")
+            for row in reader:
+                table_inventory.add_row(row['product_name'], 
+                            row['buy_price'],
+                            row['quantity'], 
+                            row['expiration_date'],
+                            row['id'])
+
+            console = Console()
+            console.print(table_inventory)
         return
-#        if args.format == "inventory":
-    
+
+
+    ## Command Buy 
 
     if args.command == "buy":
         with open('inventory.csv', 'r') as file:
@@ -74,6 +92,14 @@ def main():
             })
             return 
     
+    ## Command Revenue
+        
+    if args.command == "revenue":
+        table = Table(title=Panel("[blue bold]Revenue of today",), show_header=True)
+        table.add_column("Mare Lore Ipsum", header_style="yellow")
+        console = Console()
+        console.print(table)
+        return
 
 if __name__ == "__main__":
     main()
