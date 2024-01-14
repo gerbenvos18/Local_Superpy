@@ -1,10 +1,14 @@
 # Imports
 from argparse import *
 import csv
+import random
 from datetime import date
 from functions import *
+
 from rich_argparse import RichHelpFormatter
 from rich.pretty import pprint
+from rich import print
+from rich.panel import Panel
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -15,8 +19,9 @@ __human_name__ = "superpy"
 # Main code:
 
 def main():
+    set_current_date()
     # $ python -m main -h
-    parser = ArgumentParser(description="Hello you're using superpy!", 
+    parser = ArgumentParser(description=f"Hello you're using superpy.  Date: [reverse]{today_formatted}[/]", 
                             epilog="use -h for more information",
                             add_help=f"This is a CLI tool to check, change and report about our inventory."
                                      f"See the readme for more information about its usage.",
@@ -24,7 +29,7 @@ def main():
     subparser = parser.add_subparsers(dest="command")
       
 # Commando report:
-    # $ python -m main report inventory
+    # $ python -m main report
     # $ python -m main report -h
     # $ python -m main buy Grape 1.50 14 8
 
@@ -51,6 +56,7 @@ def main():
     ## Command Report 
 
     if args.command == "report":
+
         table_inventory = Table(title=Panel(f"[blue bold]Inventory - {today_formatted}",), show_header=True)
         table_inventory.add_column("Product", header_style="yellow", justify="center")
         table_inventory.add_column("Purchase_€", header_style="yellow")
@@ -59,7 +65,7 @@ def main():
         table_inventory.add_column("Id", header_style="yellow",justify="right")
 
         with open('inventory.csv', 'r') as file:
-            reader = csv.DictReader(file, delimiter=";")
+            reader = csv.DictReader(file, delimiter=",")
             for row in reader:
                 table_inventory.add_row(row['product_name'], 
                             row['buy_price'],
@@ -76,12 +82,12 @@ def main():
 
     if args.command == "buy":
         with open('inventory.csv', 'r') as file:
-            reader = csv.reader(file, delimiter=";")
-            article_id = sum(1 for row in reader)
+            reader = csv.reader(file, delimiter=",")
+            article_id = id_generator()
 
         with open('inventory.csv', 'a', newline='') as file:
             fieldnames = ["id", "product_name", "quantity", "buy_date", "buy_price", "expiration_date"]
-            writer = csv.DictWriter(file, fieldnames=fieldnames, delimiter=";")
+            writer = csv.DictWriter(file, fieldnames=fieldnames, delimiter=",")
             writer.writerow({
                 "id": article_id,
                 "product_name": args.item,
@@ -90,6 +96,13 @@ def main():
                 "buy_price": args.price,
                 "expiration_date": expire_date(args.bbd)
             })
+
+            print(Panel(f"You bought a: [cyan bold]{args.item}[/] \n"
+            f"Total Price: € [yellow bold]{args.price}[/] \n"
+            f"Qty: [cyan bold]{args.qty}[/] \n"
+            f"Shelf_life: [green bold]{args.bbd}[/] days \n"
+            f"Purchase date: [green bold]{today_formatted}[/] \n"
+            f"Best by date: [red bold]{expire_date(args.bbd)}[/]"))
             return 
     
     ## Command Revenue
