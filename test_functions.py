@@ -9,7 +9,7 @@ from rich.console import Console
 "$ python -m pytest"
 "18,Grapes,200,14-01-2024,1.5,22-01-2024"
 
-verkocht = 1
+article_id = 1
 prijs = 12.00
 aantal = 10
 # id;product_name;quantity;sales_price;expiration_date
@@ -24,7 +24,7 @@ def sell_article():
 
     # Aanpassen id,product_name,quantity,buy_price,sales_price,expiration_date
         for row in rows:
-            if row["id"] == str(verkocht):
+            if row["id"] == str(article_id):
                 if int(row["quantity"]) > aantal:
                     row["quantity"] = int(row['quantity']) - aantal
                     print(f"You've sold {aantal} {row["product_name"]}")
