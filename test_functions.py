@@ -3,6 +3,7 @@ import datetime
 import csv
 from functions import *
 from rich.console import Console
+import argparse
 
 
 # Terminal invoer voor pytest: 
@@ -12,10 +13,14 @@ from rich.console import Console
 article_id = 1
 prijs = 12.00
 aantal = 10
+
+print(type(article_id))
+print(type(prijs))
+print(type(aantal))
 # id;product_name;quantity;sales_price;expiration_date
 
 
-def sell_article():
+"""def sell_article():
     sales_append = {}
     # Lezen van de CSV
     with open('inventory.csv', mode='r+', newline='') as file:
@@ -68,6 +73,5 @@ def sell_article():
                                                           "expiration_date"], delimiter=",")
                 writer.writerow(sales_append)
     
-    return
+    return"""
 
-sell_article()

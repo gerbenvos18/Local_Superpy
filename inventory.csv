@@ -1,5 +1,4 @@
 id,product_name,quantity,buy_date,buy_price,expiration_date
-4,Oranges,25,7-1-2024,0.8,28-1-2024
 12,Apples,35,2-1-2024,0.5,23-1-2024
 16,Chicken_breasts,15,25-12-2023,1.50,1-1-2024
 24,Hamburgers,20,3-1-2024,2.25,10-1-2024
@@ -15,3 +14,5 @@ id,product_name,quantity,buy_date,buy_price,expiration_date
 21,Apples,10,14-01-2024,1.5,20-01-2024
 25,Pancakes,12,14-01-2024,3.25,31-01-2024
 18,Grapes,182,14-01-2024,1.5,22-01-2024
+15,Grape,14,15-01-2024,1.5,23-01-2024
+19,Chips,2,15-01-2024,3.0,14-02-2024

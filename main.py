@@ -44,9 +44,9 @@ def main():
     buy_parser.add_argument("bbd", type=int, help="Shelf life in days, e.g. 10 days")
 
     sell_parser = subparser.add_parser("sell", help="Sell item from the store")
-    sell_parser.add_argument("id", type=str, help="id of the article")
+    sell_parser.add_argument("id", type=int, help="id of the article")
     sell_parser.add_argument("price", type=float, help="Retail price of the article in €")
-    sell_parser.add_argument("qty", type=str, help="Quantity of the article sold")
+    sell_parser.add_argument("qty", type=int, help="Quantity of the article sold")
 
     revenue_parser = subparser.add_parser("revenue", help="Report revenue given period")
     profit_parser = subparser.add_parser("profit", help="Report profit given period")
@@ -114,40 +114,51 @@ def main():
     ## Command Sell
 
     if args.command == "sell":
+    
         sales_append = {}
-        # Lezen van de CSV
+            # Lezen van de CSV
         with open('inventory.csv', mode='r+', newline='') as file:
             reader = csv.DictReader(file, delimiter=",")
             rows = list(reader)
 
-        # Aanpassen id,product_name,quantity,buy_price,sales_price,expiration_date
+            # Aanpassen id,product_name,quantity,buy_price,sales_price,expiration_date
             for row in rows:
-                if row["id"] == str(args.id):
-                    if int(row["quantity"]) > args.quantity:
-                        row["quantity"] = int(row['quantity']) - args.quantity
-                        print(f"You've sold {args.quantity} {row["product_name"]}")
+                print(type(row["id"]))
+                print(type(row["quantity"]))
+                print(type(row["buy_price"]))
+
+                print(row["id"])
+                print(args.id)
+
+                if row["id"] == args.id:
+                    if int(row["quantity"]) > args.qty:
+                        print("Test 1")
+                        row["quantity"] = int(row['quantity']) - args.qty
+                        print(f"You've sold {args.qty} {row["product_name"]}")
                         sales_append = {"id": row["id"],
+                                            "product_name": row["product_name"],
+                                            "quantity": args.qty,
+                                            "buy_price": row["buy_price"],
+                                            "sales_price": args.price,
+                                            "sale_date": today_formatted,
+                                            "expiration_date": row["expiration_date"]}
+                    break
+
+                elif int(args.qty) >= int(row['quantity']):
+                    print("Test 2")
+                    print(f"You've sold the last amount of {row['product_name']}: {row['quantity']}")
+                    sales_append = {"id": row["id"],
                                         "product_name": row["product_name"],
-                                        "quantity": args.quantity,
+                                        "quantity": row['quantity'],
                                         "buy_price": row["buy_price"],
                                         "sales_price": args.price,
                                         "sale_date": today_formatted,
                                         "expiration_date": row["expiration_date"]}
-                    break
-
-                if args.quantity >= int(row['quantity']):
-                    print(f"You've sold the last amount of {row['product_name']}: {row['quantity']}")
-                    sales_append = {"id": row["id"],
-                                    "product_name": row["product_name"],
-                                    "quantity": row['quantity'],
-                                    "buy_price": row["buy_price"],
-                                    "sales_price": args.price,
-                                    "sale_date": today_formatted,
-                                    "expiration_date": row["expiration_date"]}
                     rows.remove(row)
                     break
 
                 else:
+                    print("Test 3")
                     print(f"The item you want to sell is not in stock!")
                     break  
 
@@ -161,10 +172,11 @@ def main():
             if sales_append != {}:
                 with open("sales.csv", mode="a", newline="") as output:
                     writer = csv.DictWriter(output, fieldnames = ["id","product_name",
-                                                            "quantity","buy_price",
-                                                            "sales_price","sale_date",
-                                                            "expiration_date"], delimiter=",")
+                                                                "quantity","buy_price",
+                                                                "sales_price","sale_date",
+                                                                "expiration_date"], delimiter=",")
                     writer.writerow(sales_append)
+
         return
 
     ## Command Revenue
