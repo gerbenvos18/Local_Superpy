@@ -61,111 +61,19 @@ def main():
     ## Command Report 
 
     if args.command == "report":
-
-        table_inventory = Table(title=Panel(f"[blue bold]Inventory - {today_formatted}",), show_header=True)
-        table_inventory.add_column("Product", header_style="yellow", justify="center")
-        table_inventory.add_column("Purchase_€", header_style="yellow")
-        table_inventory.add_column("Qty", header_style="yellow")
-        table_inventory.add_column("Expiration_date", header_style="yellow", justify="center")
-        table_inventory.add_column("Id", header_style="yellow",justify="right")
-
-        with open('inventory.csv', 'r') as file:
-            reader = csv.DictReader(file, delimiter=",")
-            for row in reader:
-                table_inventory.add_row(row['product_name'], 
-                            row['buy_price'],
-                            row['quantity'], 
-                            row['expiration_date'],
-                            row['id'])
-
-            console = Console()
-            console.print(table_inventory)
-        return
-
+        report_inventory()
+        pass
 
     ## Command Buy 
 
     if args.command == "buy":
-        with open('inventory.csv', 'r') as file:
-            reader = csv.reader(file, delimiter=",")
-            article_id = id_generator()
-
-        with open('inventory.csv', 'a', newline='') as file:
-            fieldnames = ["id", "product_name", "quantity", "buy_date", "buy_price", "expiration_date"]
-            writer = csv.DictWriter(file, fieldnames=fieldnames, delimiter=",")
-            writer.writerow({
-                "id": article_id,
-                "product_name": args.item,
-                "quantity": args.qty,
-                "buy_date": today_formatted,
-                "buy_price": args.price,
-                "expiration_date": expire_date(args.bbd)
-            })
-
-            print(Panel(f"You bought a: [cyan bold]{args.item}[/] \n"
-            f"Total Price: € [yellow bold]{args.price}[/] \n"
-            f"Qty: [cyan bold]{args.qty}[/] \n"
-            f"Shelf_life: [green bold]{args.bbd}[/] days \n"
-            f"Purchase date: [green bold]{today_formatted}[/] \n"
-            f"Best by date: [red bold]{expire_date(args.bbd)}[/]"))
-            return 
-    
+        buy_article(buy_item=args.item, buy_qty=args.qty, buy_price=args.price, buy_bbd=args.bbd)
+        return
 
     ## Command Sell
 
     if args.command == "sell":
-
-        sales_append = {}
-        with open('inventory.csv', mode='r+', newline='') as file:
-            reader = csv.DictReader(file, delimiter=",")
-            rows = list(reader)
-
-    # Aanpassen id,product_name,quantity,buy_price,sales_price,expiration_date
-            for row in rows:
-                if row["id"] == str(args.id_sell):
-                    if int(row["quantity"]) > args.qty_sell:
-                        row["quantity"] = int(row['quantity']) - args.qty_sell
-                        print(f"You've sold {args.qty_sell} {row["product_name"]}")
-                        sales_append = {"id": row["id"],
-                                    "product_name": row["product_name"],
-                                    "quantity": args.qty_sell,
-                                    "buy_price": row["buy_price"],
-                                    "sales_price": args.price_sell,
-                                    "sale_date": today_formatted,
-                                    "expiration_date": row["expiration_date"]}
-                        break
-
-                if args.qty_sell >= int(row['quantity']):
-                    print(f"You've sold the last amount of {row['product_name']}: {row['quantity']}")
-                    sales_append = {"id": row["id"],
-                                "product_name": row["product_name"],
-                                "quantity": row['quantity'],
-                                "buy_price": row["buy_price"],
-                                "sales_price": args.price_sell,
-                                "sale_date": today_formatted,
-                                "expiration_date": row["expiration_date"]}
-                    rows.remove(row)
-                    break
-
-                else:
-                    print(f"The item you want to sell is not in stock!")
-                    break  
-
-            file.seek(0)
-            file.truncate()
-
-            writer = csv.DictWriter(file, fieldnames= reader.fieldnames, delimiter=",")
-            writer.writeheader()
-            writer.writerows(rows)
-
-            if sales_append != {}:
-                with open("sales.csv", mode="a", newline="") as output:
-                    writer = csv.DictWriter(output, fieldnames = ["id","product_name",
-                                                          "quantity","buy_price",
-                                                          "sales_price","sale_date",
-                                                          "expiration_date"], delimiter=",")
-                    writer.writerow(sales_append)
-    
+        sell_article(id_sell=args.id_sell, qty_sell=args.qty_sell, price_sell=args.price_sell)
         return
 
     ## Command Revenue

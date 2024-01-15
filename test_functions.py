@@ -20,7 +20,7 @@ print(type(a_price_sell))
 print(type(a_qty_sell))
 # id;product_name;quantity;sales_price;expiration_date
 
-def sell_article():
+"""def sell_article():
     sales_append = {}
     # Lezen van de CSV
     with open('inventory.csv', mode='r+', newline='') as file:
@@ -73,7 +73,6 @@ def sell_article():
                                                           "expiration_date"], delimiter=",")
                 writer.writerow(sales_append)
     
-    return
+    return"""
 
-sell_article()
-
+#sell_article()
