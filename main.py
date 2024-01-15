@@ -32,6 +32,7 @@ def main():
     # $ python -m main report
     # $ python -m main report -h
     # $ python -m main buy Grape 1.50 14 8
+    # $ python -m main sell 18 10 12
 
     # Idee weggooien van alle artikelen die over de datum zijn 
 
@@ -52,8 +53,9 @@ def main():
     profit_parser = subparser.add_parser("profit", help="Report profit given period")
     old_stock = subparser.add_parser("old stock", help="Check for items that are past due")
 
-    time_parser = subparser.add_parser("time", help="Set the date used by the sytem")
-    time_parser.add_argument("set_date", type=str, help="Set date in format: Y-M-D / 2020-10-05")
+    time_parser = subparser.add_parser("time", help="Set the date used by Superpy")
+    time_parser.add_argument("set_date", type=str, help="Set a date in format: Y-M-D / 2020-10-05")
+    time_parser.add_argument("live_date", type=str, help="Set the date to realtime")
 
     args = parser.parse_args()
 
@@ -84,6 +86,16 @@ def main():
         console = Console()
         console.print(table)
         return
+    
+    ## Command Profit
+
+    if args.command == "profit":
+        pass
+
+    ## Command Time
+
+    if args.command == "time":
+        pass
 
 if __name__ == "__main__":
     main()
