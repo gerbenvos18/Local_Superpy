@@ -4,6 +4,9 @@ import csv
 import random
 from datetime import date
 from functions import *
+#from functions import superpy_date
+
+#https://www.youtube.com/watch?v=hkii1p7jPFo Search through directories to find keywords
 
 from rich_argparse import RichHelpFormatter
 from rich.pretty import pprint
@@ -25,7 +28,7 @@ __human_name__ = "superpy"
 def main():
     
     # $ python -m main -h
-    parser = ArgumentParser(description=f"Hello you're using superpy.  Date: [reverse]{today_formatted}[/]", 
+    parser = ArgumentParser(description=f"Hello you're using superpy.  Working date: [reverse]{superpy_date}[/]", 
                             epilog="use -h for more information",
                             add_help=f"This is a CLI tool to check, change and report about our inventory."
                                      f"See the readme for more information about its usage.",
@@ -38,9 +41,11 @@ def main():
     # $ python -m main buy Grape 1.50 14 8
     # $ python -m main sell 18 10 12
     # $ python -m main revenue -h
+    # $ python -m main revenue 14-01-2024 18-01-2024
     # $ python -m main time set_date -10
     # $ python -m main set_date 20
     # $ python -m main current_date
+    # $ python -m main profit 14-01-2024 18-01-2024
 
     # Idee weggooien van alle artikelen die over de datum zijn 
 
@@ -62,7 +67,9 @@ def main():
     revenue_parser.add_argument("end_date_revenue", type=str, help="End date for revenue")
 
     profit_parser = subparser.add_parser("profit", help="Report profit given period")
-    
+    profit_parser.add_argument("start_date_profit", type=str, help="Start date for profit")
+    profit_parser.add_argument("end_date_profit", type=str, help="End date for profit")
+
     old_stock = subparser.add_parser("old stock", help="Check for items that are past due")
 
     set_date_parser = subparser.add_parser("set_date", help="Set the date used by Superpy")
@@ -102,6 +109,7 @@ def main():
     ## Command report about profit in given period
 
     if args.command == "profit":
+        report_profit(start_date=args.start_date_profit, end_date=args.end_date_profit)
         pass
 
     ## Command set to specific date

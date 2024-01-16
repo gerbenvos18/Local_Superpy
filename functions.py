@@ -15,6 +15,7 @@ from rich.traceback import install
 today_datetime = datetime.datetime.today()
 time_notation = "%d-%m-%Y"
 today_formatted = today_datetime.strftime(time_notation)
+
 install()   #Console log from rich module
 
 class Article():
@@ -25,6 +26,14 @@ class Article():
         self.qty = qty                  #Amount bought
         self.shelf_life = shelf_life    #Shelf life of article in days
         self.bbd_date = expire_date(shelf_life) #Bbd 
+
+# Read current date from txt file:
+def read_date():
+    with open("time.txt", "r") as file:
+        current_date = file.readline()
+    return current_date
+
+superpy_date = read_date()
 
 ## Random Id generator to give every item its own Id.
 def id_generator():
@@ -110,7 +119,7 @@ def report_profit(start_date, end_date):
         print(Panel(f"[bold]Time Period:[/] [yellow]{start_date}[/] - [red]{end_date}[/]\n"
                     f"[bold]Total Profit:[/] [green bold]€{profit_sorted}"))
     return profit_sorted
-report_profit("14-01-2024","17-01-2024")
+
 
 #Buy Article - Buying an article using the item, qty, price and shelf life
 def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
@@ -141,6 +150,7 @@ def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
 
 
 # Sell article - Selling an article using its id, quantity and price
+
 def sell_article(id_sell, qty_sell, price_sell):
     sales_append = {}
     # Reading the inventory CSV
@@ -149,8 +159,13 @@ def sell_article(id_sell, qty_sell, price_sell):
         rows = list(reader)
 
     # Generate new rows to add in sales CSV
-        for row in rows:
+        for row in rows:    
             if row["id"] == str(id_sell):
+
+                if datetime.datetime.strptime(row["expiration_date"], time_notation) < datetime.datetime.strptime(superpy_date, time_notation):
+                    print(f"The [red]{row["product_name"]}[/] you've tried to sell are past bbd!")
+                    break
+
                 if int(row["quantity"]) > qty_sell:
                     row["quantity"] = int(row['quantity']) - qty_sell
                     print(f"You've sold {qty_sell} {row["product_name"]}")
@@ -218,7 +233,3 @@ def set_current_date():
         print(f"Superpy's working date is set to: {today_formatted}")
     return
 
-    """table = Table(title=Panel("[blue bold]Revenue of today",), show_header=True)
-    table.add_column("Mare Lore Ipsum", header_style="yellow")
-    console = Console()
-    console.print(table)"""
