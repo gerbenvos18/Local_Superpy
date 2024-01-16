@@ -82,19 +82,20 @@ def report_inventory():
 #Report revenue - Print the revenue of a given date or timeslot  
 
 def report_revenue(start_date, end_date):
-    revenue_sorted = 0.0
+    revenue_sorted = 0.00
     console = Console()
     with open("sales.csv", "r", newline="") as file:
         reader = csv.DictReader(file, delimiter=",")
         rows = list(reader)
         for row in rows:
             if start_date <= row["sale_date"] <= end_date:
-                console.print((f"{row["product_name"]}:  {row["sales_price"]}"))
+                console.print((f"{row["product_name"]}:  € {row["sales_price"]}"))
                 revenue_sorted += float((row["sales_price"]))
-        print(Panel(f"Revenue of today: [green bold]€{revenue_sorted}"))
+        print(Panel(f"[yellow]{start_date}[/] - [red]{end_date}[/]    Total revenue: [green bold]€{revenue_sorted}"))
     return revenue_sorted
 
-report_revenue("16-01-2024", "17-01-2024")
+#report_revenue("16-01-2024", "17-01-2024")
+
 #Buy Article - Buying an article using the item, qty, price and shelf life
 def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
     with open('inventory.csv', 'r', newline="") as file:

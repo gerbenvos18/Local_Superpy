@@ -12,6 +12,7 @@ from rich.panel import Panel
 from rich.console import Console
 from rich.table import Table
 from rich.traceback import install
+from rich.progress import track
 
 install()
 
@@ -36,6 +37,7 @@ def main():
     # $ python -m main report -h
     # $ python -m main buy Grape 1.50 14 8
     # $ python -m main sell 18 10 12
+    # $ python -m main revenue -h
 
     # Idee weggooien van alle artikelen die over de datum zijn 
 
@@ -52,7 +54,10 @@ def main():
     sell_parser.add_argument("price_sell", type=float, help="Retail price of the article in €")
     sell_parser.add_argument("qty_sell", type=int, help="Quantity of the article sold")
   
-    revenue_parser = subparser.add_parser("revenue", help="Report revenue given period")
+    revenue_parser = subparser.add_parser("revenue", help="Report revenue given period format: DD-MM-YYYY")
+    revenue_parser.add_argument("start_date_revenue", help="Start date for revenue")
+    revenue_parser.add_argument("end_date_revenue", help="End date for revenue")
+
     profit_parser = subparser.add_parser("profit", help="Report profit given period")
     old_stock = subparser.add_parser("old stock", help="Check for items that are past due")
 
@@ -84,7 +89,7 @@ def main():
     ## Command Revenue
         
     if args.command == "revenue":
-        report_revenue()
+        report_revenue(start_date=args.start_date_revenue, end_date=args.end_date_revenue)
         return
     
     ## Command Profit
