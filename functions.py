@@ -2,17 +2,20 @@
 
 import csv
 import datetime
+import random
 
 from rich.console import Console
 from rich.table import Table
 from rich import print
 from rich.panel import Panel
+from rich.traceback import install
 
 #Variables and article class
 
 today_datetime = datetime.datetime.today()
 time_notation = "%d-%m-%Y"
 today_formatted = today_datetime.strftime(time_notation)
+install()   #Console log from rich module
 
 class Article():
     buy_date = today_formatted
@@ -25,15 +28,22 @@ class Article():
 
 ## Random Id generator to give every item its own Id.
 def id_generator():
-    import random
     existing_ids = set()
     with open('inventory.csv', mode='r', newline='') as file:
         reader = csv.DictReader(file)
         for row in reader:
             existing_ids.add(int(row["id"]))
-    random_id = random.choice([x for x in range(50) if x not in existing_ids])
+    random_id = random.choice([x for x in range(0,51) if x not in existing_ids])
     return random_id
 
+def id_generator_sales():
+    existing_ids_sales = set()
+    with open('sales.csv', mode='r', newline='') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            existing_ids_sales.add(int(row["sales_id"]))
+    random_id_sales = random.choice([x for x in range(100,201) if x not in existing_ids_sales])
+    return random_id_sales
 
 #Used to calculate the shelf_life
 def expire_date(days):                      
@@ -47,7 +57,7 @@ def expire_date(days):
     return new_date.strftime(time_notation)
 
 
-#Report - current inventory
+#Report Inventory - Report about current state of inventory
 def report_inventory():
     table_inventory = Table(title=Panel(f"[blue bold]Inventory - {today_formatted}",), show_header=True)
     table_inventory.add_column("Product", header_style="yellow", justify="center")
@@ -69,10 +79,26 @@ def report_inventory():
         console.print(table_inventory)
     return
 
-#Buying a article
+#Report revenue - Print the revenue of a given date or timeslot  
+
+def report_revenue(start_date, end_date):
+    revenue_sorted = 0.0
+    console = Console()
+    with open("sales.csv", "r", newline="") as file:
+        reader = csv.DictReader(file, delimiter=",")
+        rows = list(reader)
+        for row in rows:
+            if start_date <= row["sale_date"] <= end_date:
+                console.print((f"{row["product_name"]}:  {row["sales_price"]}"))
+                revenue_sorted += float((row["sales_price"]))
+        print(Panel(f"Revenue of today: [green bold]€{revenue_sorted}"))
+    return revenue_sorted
+
+report_revenue("16-01-2024", "17-01-2024")
+#Buy Article - Buying an article using the item, qty, price and shelf life
 def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
-    with open('inventory.csv', 'r') as file:
-        reader = csv.reader(file, delimiter=",")
+    with open('inventory.csv', 'r', newline="") as file:
+        reader = csv.DictReader(file, delimiter=",")
         article_id = id_generator()
 
     with open('inventory.csv', 'a', newline='') as file:
@@ -97,7 +123,7 @@ def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
 #buy_article("Tofu", 5, 7.50, 12)
 
 
-# Selling an article 
+# Sell article - Selling an article using its id, quantity and price
 def sell_article(id_sell, qty_sell, price_sell):
     sales_append = {}
     # Reading the inventory CSV
@@ -111,7 +137,7 @@ def sell_article(id_sell, qty_sell, price_sell):
                 if int(row["quantity"]) > qty_sell:
                     row["quantity"] = int(row['quantity']) - qty_sell
                     print(f"You've sold {qty_sell} {row["product_name"]}")
-                    sales_append = {"id": row["id"],
+                    sales_append = {"sales_id": id_generator_sales(),
                                     "product_name": row["product_name"],
                                     "quantity": qty_sell,
                                     "buy_price": row["buy_price"],
@@ -122,7 +148,7 @@ def sell_article(id_sell, qty_sell, price_sell):
 
                 if qty_sell >= int(row['quantity']):
                     print(f"You've sold the last amount of {row['product_name']}: {row['quantity']}")
-                    sales_append = {"id": row["id"],
+                    sales_append = {"sales_id": id_generator_sales(),
                                 "product_name": row["product_name"],
                                 "quantity": row['quantity'],
                                 "buy_price": row["buy_price"],
@@ -146,7 +172,7 @@ def sell_article(id_sell, qty_sell, price_sell):
     # Adding sales to new CSV list:
         if sales_append != {}:
             with open("sales.csv", mode="a", newline="") as output:
-                writer = csv.DictWriter(output, fieldnames = ["id","product_name",
+                writer = csv.DictWriter(output, fieldnames = ["sales_id","product_name",
                                                           "quantity","buy_price",
                                                           "sales_price","sale_date",
                                                           "expiration_date"], delimiter=",")
@@ -154,8 +180,7 @@ def sell_article(id_sell, qty_sell, price_sell):
     
     return 
 
-
-#Used to set the date
+#Change date - Change the date of the system to the future or the past
 def change_date(days):                      
     with open('time.txt', 'r') as file:
         current_date = file.readline()
@@ -168,18 +193,13 @@ def change_date(days):
         file.write(new_date.strftime(time_notation))
         return    
         
-
-
-
-
-#Used to set date back to current date
+#Set current date - Set the date back to current date in realtime 
 def set_current_date():                     
     with open('time.txt', 'w') as file:
         file.write(today_formatted)
     return
 
-   
-def report_revenue():
-    ## Open csv van sales en dan som van alle verkoop prijzen. 
-    pass
-
+    """table = Table(title=Panel("[blue bold]Revenue of today",), show_header=True)
+    table.add_column("Mare Lore Ipsum", header_style="yellow")
+    console = Console()
+    console.print(table)"""

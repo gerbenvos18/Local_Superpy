@@ -9,12 +9,15 @@ from rich_argparse import RichHelpFormatter
 from rich.pretty import pprint
 from rich import print
 from rich.panel import Panel
+from rich.console import Console
+from rich.table import Table
+from rich.traceback import install
+
+install()
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
 __human_name__ = "superpy"
-
-# Global variables:
 
 # Main code:
 
@@ -81,10 +84,7 @@ def main():
     ## Command Revenue
         
     if args.command == "revenue":
-        table = Table(title=Panel("[blue bold]Revenue of today",), show_header=True)
-        table.add_column("Mare Lore Ipsum", header_style="yellow")
-        console = Console()
-        console.print(table)
+        report_revenue()
         return
     
     ## Command Profit
