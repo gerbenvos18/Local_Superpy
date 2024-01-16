@@ -80,7 +80,6 @@ def report_inventory():
     return
 
 #Report revenue - Print the revenue of a given date or timeslot  
-
 def report_revenue(start_date, end_date):
     revenue_sorted = 0.00
     console = Console()
@@ -89,12 +88,29 @@ def report_revenue(start_date, end_date):
         rows = list(reader)
         for row in rows:
             if start_date <= row["sale_date"] <= end_date:
-                console.print((f"{row["product_name"]}:  € {row["sales_price"]}"))
+                console.print((f"ID: {row["sales_id"]} ({row["product_name"]}) € {row["sales_price"]}"))
                 revenue_sorted += float((row["sales_price"]))
-        print(Panel(f"[yellow]{start_date}[/] - [red]{end_date}[/]    Total revenue: [green bold]€{revenue_sorted}"))
+        print(Panel(f"[bold]Time Period:[/] [yellow]{start_date}[/] - [red]{end_date}[/]\n"
+                    f"[bold]Total Revenue:[/] [green bold]€{revenue_sorted}"))
     return revenue_sorted
 
-#report_revenue("16-01-2024", "17-01-2024")
+
+#Report profit - print the profit of a given date or timeslot
+def report_profit(start_date, end_date):
+    profit_sorted = 0.00
+    console = Console()
+    with open("sales.csv", "r", newline="") as file:
+        reader = csv.DictReader(file, delimiter=",")
+        rows = list(reader)
+        for row in rows:
+            if start_date <= row["sale_date"] <= end_date:
+                profit = float(row["sales_price"]) - float(row["buy_price"])
+                console.print(f"Id: {row["sales_id"]} ({row["product_name"]}):  € {profit}")
+                profit_sorted += profit
+        print(Panel(f"[bold]Time Period:[/] [yellow]{start_date}[/] - [red]{end_date}[/]\n"
+                    f"[bold]Total Profit:[/] [green bold]€{profit_sorted}"))
+    return profit_sorted
+report_profit("14-01-2024","17-01-2024")
 
 #Buy Article - Buying an article using the item, qty, price and shelf life
 def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
@@ -192,12 +208,14 @@ def change_date(days):
 
     with open('time.txt', 'w') as file:
         file.write(new_date.strftime(time_notation))
+        print(f"Superpy's working date is set to: {new_date.strftime(time_notation)}")
         return    
-        
+
 #Set current date - Set the date back to current date in realtime 
 def set_current_date():                     
     with open('time.txt', 'w') as file:
         file.write(today_formatted)
+        print(f"Superpy's working date is set to: {today_formatted}")
     return
 
     """table = Table(title=Panel("[blue bold]Revenue of today",), show_header=True)

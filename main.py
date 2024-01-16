@@ -23,7 +23,7 @@ __human_name__ = "superpy"
 # Main code:
 
 def main():
-    set_current_date()
+    
     # $ python -m main -h
     parser = ArgumentParser(description=f"Hello you're using superpy.  Date: [reverse]{today_formatted}[/]", 
                             epilog="use -h for more information",
@@ -38,6 +38,9 @@ def main():
     # $ python -m main buy Grape 1.50 14 8
     # $ python -m main sell 18 10 12
     # $ python -m main revenue -h
+    # $ python -m main time set_date -10
+    # $ python -m main set_date 20
+    # $ python -m main current_date
 
     # Idee weggooien van alle artikelen die over de datum zijn 
 
@@ -55,52 +58,64 @@ def main():
     sell_parser.add_argument("qty_sell", type=int, help="Quantity of the article sold")
   
     revenue_parser = subparser.add_parser("revenue", help="Report revenue given period format: DD-MM-YYYY")
-    revenue_parser.add_argument("start_date_revenue", help="Start date for revenue")
-    revenue_parser.add_argument("end_date_revenue", help="End date for revenue")
+    revenue_parser.add_argument("start_date_revenue", type=str, help="Start date for revenue")
+    revenue_parser.add_argument("end_date_revenue", type=str, help="End date for revenue")
 
     profit_parser = subparser.add_parser("profit", help="Report profit given period")
+    
     old_stock = subparser.add_parser("old stock", help="Check for items that are past due")
 
-    time_parser = subparser.add_parser("time", help="Set the date used by Superpy")
-    time_parser.add_argument("set_date", type=str, help="Set a date in format: Y-M-D / 2020-10-05")
-    time_parser.add_argument("live_date", type=str, help="Set the date to realtime")
+    set_date_parser = subparser.add_parser("set_date", help="Set the date used by Superpy")
+    set_date_parser.add_argument("days", type=int, help="Set date forward or revert in days")
+
+    current_date_parser = subparser.add_parser("current_date", help="Set date to current date")
+
+    #time_parser.add_argument("live_date", type=str, help="Set date back to realtime date")
+
 
     args = parser.parse_args()
 
-
-    ## Command Report 
+    ## Command report about current inventory
 
     if args.command == "report":
         report_inventory()
         pass
 
-    ## Command Buy 
+    ## Command buy a article based on name
 
     if args.command == "buy":
         buy_article(buy_item=args.item, buy_qty=args.qty, buy_price=args.price, buy_bbd=args.bbd)
         return
 
-    ## Command Sell
+    ## Command sell a article based on id.
 
     if args.command == "sell":
         sell_article(id_sell=args.id_sell, qty_sell=args.qty_sell, price_sell=args.price_sell)
         return
 
-    ## Command Revenue
+    ## Command reprot about revenue in given period
         
     if args.command == "revenue":
         report_revenue(start_date=args.start_date_revenue, end_date=args.end_date_revenue)
         return
     
-    ## Command Profit
+    ## Command report about profit in given period
 
     if args.command == "profit":
         pass
 
-    ## Command Time
+    ## Command set to specific date
 
-    if args.command == "time":
-        pass
+    if args.command == "set_date":
+        change_date(args.days)
+        return
+        
+     ## Command set to current date   
+
+    if args.command == "current_date":
+        set_current_date()
+    return
+
 
 if __name__ == "__main__":
     main()

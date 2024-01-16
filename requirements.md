@@ -8,22 +8,22 @@
 
 ## Deel argparse 
 1. Tijd moet met een command als "$ python super.py --advance-time 2" twee dagen naar de toekomst kunnen
-    - Dit om te kijken of bijvoorbeeld over de datum gaat
-2. interactie via command line zie sample_terminal voor hoe dit eruit zou moeten zien.
-3. User friendly CLI met overal een --help sectie
+    - Dit om te kijken of bijvoorbeeld over de datum gaat x
+2. interactie via command line zie sample_terminal voor hoe dit eruit zou moeten zien. x
+3. User friendly CLI met overal een --help sectie x
 
 ## Deel CSV
 
-1. Welke producten de supermarkt heeft
+1. Welke producten de supermarkt heeft x
 2. Welke voorraad van een product de supermarkt heeft  x
-3. De inkoop prijs van het product en de houdbaarheidsdatum 
+3. De inkoop prijs van het product en de houdbaarheidsdatum  x
 4. Verkoopprijs OF als t.h.t datum is verlopen het feit dat het over de datum is
-5. Alle data moet in CSV files staan 
-6. Eigen data structuur maar er is een voorbeeld:
-7. bought.csv -> id,product_name,buy_date,buy_price,expiration_date
-8. sold.csv -> id,bought_id,sell_date,sell_price -> id is hier een integer 
-9. Alle data in csv bestanden
-10. Rapporteren over omzet en winst over gespecificeerde tijdsperioden
+5. Alle data moet in CSV files staan x
+6. Eigen data structuur maar er is een voorbeeld: x
+7. bought.csv -> id,product_name,buy_date,buy_price,expiration_date x
+8. sold.csv -> id,bought_id,sell_date,sell_price -> id is hier een integer  x
+9. Alle data in csv bestanden x
+10. Rapporteren over omzet en winst over gespecificeerde tijdsperioden x
 11. Exporteren selecties van data naar CSV files.
 
 
