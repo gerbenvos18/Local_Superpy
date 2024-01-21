@@ -51,31 +51,31 @@ def main():
 
     report_parser = subparser.add_parser("report", help="Report about current inventory", formatter_class=RichHelpFormatter)
 
-    buy_parser = subparser.add_parser("buy", help="Add item to the inventory, specify item, price, amount and bbd")
+    buy_parser = subparser.add_parser("buy", help="Add item to the inventory, specify item, price, amount and bbd", formatter_class=RichHelpFormatter)
     buy_parser.add_argument("item", type=str, help="Name of the article e.g. Yoghurts")
     buy_parser.add_argument("price", type=float, help="Purchase price of article in € e.g. €2.65")
     buy_parser.add_argument("qty", type=str, help="Amount of the article e.g. 5 apples")
     buy_parser.add_argument("bbd", type=int, help="Shelf life in days, e.g. 10 days")
 
-    sell_parser = subparser.add_parser("sell", help="Sell item from the store")
+    sell_parser = subparser.add_parser("sell", help="Sell item from the store", formatter_class=RichHelpFormatter)
     sell_parser.add_argument("id_sell", type=int, help="id of the article")
     sell_parser.add_argument("price_sell", type=float, help="Retail price of the article in €")
     sell_parser.add_argument("qty_sell", type=int, help="Quantity of the article sold")
   
-    revenue_parser = subparser.add_parser("revenue", help="Report revenue given period format: DD-MM-YYYY")
+    revenue_parser = subparser.add_parser("revenue", help="Report revenue given period format: DD-MM-YYYY", formatter_class=RichHelpFormatter)
     revenue_parser.add_argument("start_date_revenue", type=str, help="Start date for revenue")
     revenue_parser.add_argument("end_date_revenue", type=str, help="End date for revenue")
 
-    profit_parser = subparser.add_parser("profit", help="Report profit given period")
+    profit_parser = subparser.add_parser("profit", help="Report profit given period", formatter_class=RichHelpFormatter)
     profit_parser.add_argument("start_date_profit", type=str, help="Start date for profit")
     profit_parser.add_argument("end_date_profit", type=str, help="End date for profit")
 
-    old_stock = subparser.add_parser("old stock", help="Check for items that are past due")
+    old_stock = subparser.add_parser("old stock", help="Check for items that are past due", formatter_class=RichHelpFormatter)
 
-    set_date_parser = subparser.add_parser("set_date", help="Set the date used by Superpy")
+    set_date_parser = subparser.add_parser("set_date", help="Set the date used by Superpy", formatter_class=RichHelpFormatter)
     set_date_parser.add_argument("days", type=int, help="Set date forward or revert in days")
 
-    current_date_parser = subparser.add_parser("current_date", help="Set date to current date")
+    current_date_parser = subparser.add_parser("current_date", help="Set date to current date", formatter_class=RichHelpFormatter)
 
     #time_parser.add_argument("live_date", type=str, help="Set date back to realtime date")
 
