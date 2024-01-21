@@ -231,5 +231,5 @@ def set_current_date():
     with open('time.txt', 'w') as file:
         file.write(today_formatted)
         print(f"Superpy's working date is set to: {today_formatted}")
-    return
+        return
 
