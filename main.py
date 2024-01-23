@@ -16,6 +16,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.traceback import install
 from rich.progress import track
+import matplotlib.pyplot as plt
 
 install()
 
@@ -70,7 +71,9 @@ def main():
     profit_parser.add_argument("start_date_profit", type=str, help="Start date for profit")
     profit_parser.add_argument("end_date_profit", type=str, help="End date for profit")
 
-    old_stock = subparser.add_parser("old stock", help="Check for items that are past due", formatter_class=RichHelpFormatter)
+    plot = subparser.add_parser("plot", help="Plot the revenue and profit in a line plot", formatter_class=RichHelpFormatter)
+    plot.add_argument("start_date_plot", type=str, help="Start date for plot")
+    plot.add_argument("end_date_plot", type=str, help="End date for plot")
 
     set_date_parser = subparser.add_parser("set_date", help="Set the date used by Superpy", formatter_class=RichHelpFormatter)
     set_date_parser.add_argument("days", type=int, help="Set date forward or revert in days")
@@ -103,13 +106,13 @@ def main():
     ## Command reprot about revenue in given period
         
     if args.command == "revenue":
-        report_revenue(start_date=args.start_date_revenue, end_date=args.end_date_revenue)
+        report_revenue(date1=args.start_date_revenue, date2=args.end_date_revenue)
         return
     
     ## Command report about profit in given period
 
     if args.command == "profit":
-        report_profit(start_date=args.start_date_profit, end_date=args.end_date_profit)
+        report_profit(date1=args.start_date_profit, date2=args.end_date_profit)
         pass
 
     ## Command set to specific date
@@ -122,8 +125,11 @@ def main():
 
     if args.command == "current_date":
         set_current_date()
-    return
+        return
 
+    if args.command == "plot":
+        plot_revenue_profit(date1=args.start_date_plot, date2=args.end_date_plot)
+        return
 
 if __name__ == "__main__":
     main()

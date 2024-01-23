@@ -3,7 +3,7 @@
 import csv
 import datetime
 import random
-
+import matplotlib.pyplot as plt
 from rich.console import Console
 from rich.table import Table
 from rich import print
@@ -15,7 +15,6 @@ from rich.traceback import install
 today_datetime = datetime.datetime.today()
 time_notation = "%d-%m-%Y"
 today_formatted = today_datetime.strftime(time_notation)
-
 install()   #Console log from rich module
 
 class Article():
@@ -89,37 +88,83 @@ def report_inventory():
     return
 
 #Report revenue - Print the revenue of a given date or timeslot  
-def report_revenue(start_date, end_date):
+def report_revenue(date1, date2):
     revenue_sorted = 0.00
     console = Console()
+    start_date = datetime.datetime.strptime(date1, time_notation)
+    end_date = datetime.datetime.strptime(date2, time_notation)
     with open("sales.csv", "r", newline="") as file:
         reader = csv.DictReader(file, delimiter=",")
         rows = list(reader)
         for row in rows:
-            if start_date <= row["sale_date"] <= end_date:
+            sale_date = datetime.datetime.strptime(row["sale_date"], time_notation)
+            if start_date <= sale_date <= end_date:
                 console.print((f"ID: {row["sales_id"]} ({row["product_name"]}) € {row["sales_price"]}"))
                 revenue_sorted += float((row["sales_price"]))
-        print(Panel(f"[bold]Time Period:[/] [yellow]{start_date}[/] - [red]{end_date}[/]\n"
+        print(Panel(f"[bold]Time Period:[/] [yellow]{date1}[/] - [red]{date2}[/]\n"
                     f"[bold]Total Revenue:[/] [green bold]€{revenue_sorted}"))
     return revenue_sorted
 
 
 #Report profit - print the profit of a given date or timeslot
-def report_profit(start_date, end_date):
+def report_profit(date1, date2):
     profit_sorted = 0.00
     console = Console()
+    start_date = datetime.datetime.strptime(date1, time_notation)
+    end_date = datetime.datetime.strptime(date2, time_notation)
     with open("sales.csv", "r", newline="") as file:
         reader = csv.DictReader(file, delimiter=",")
         rows = list(reader)
         for row in rows:
-            if start_date <= row["sale_date"] <= end_date:
+            sale_date = datetime.datetime.strptime(row["sale_date"], time_notation)
+            if start_date <= sale_date <= end_date:
                 profit = float(row["sales_price"]) - float(row["buy_price"])
                 console.print(f"Id: {row["sales_id"]} ({row["product_name"]}):  € {profit}")
                 profit_sorted += profit
-        print(Panel(f"[bold]Time Period:[/] [yellow]{start_date}[/] - [red]{end_date}[/]\n"
+        print(Panel(f"[bold]Time Period:[/] [yellow]{date1}[/] - [red]{date2}[/]\n"
                     f"[bold]Total Profit:[/] [green bold]€{profit_sorted}"))
     return profit_sorted
 
+def plot_revenue_profit(date1, date2):
+    fieldnames_sales = ["sales_id","product_name",
+                       "quantity","buy_price","sales_price",
+                        "sale_date","expiration_date"]
+    x_names = []
+    y_profit = []
+    y_revenue = []
+    start_date = datetime.datetime.strptime(date1, time_notation)
+    end_date = datetime.datetime.strptime(date2, time_notation)
+    filtered_rows = []
+    with open("sales.csv", "r", newline="") as file:
+        reader = csv.DictReader(file, delimiter=",")
+        rows = list(reader)
+        for row in rows:
+            sale_date = datetime.datetime.strptime(row["sale_date"], time_notation)
+            if start_date <= sale_date <= end_date:
+                filtered_rows.append(row)
+
+    with open("plot.csv", "w", newline="") as new_file:
+        writer = csv.DictWriter(new_file, fieldnames = fieldnames_sales, delimiter=",")
+        writer.writeheader()
+        writer.writerows(filtered_rows)
+        for row in filtered_rows:
+            x_names.append(f"{row["product_name"]} - €{row["sales_price"]}")
+            y_profit.append(float(row["sales_price"]) - float(row["buy_price"]))
+            y_revenue.append(float(row["sales_price"]))
+
+    fig, axs = plt.subplots(1, 2, figsize=(8, 4)) #Number of rows in subplot
+    
+    plt.title(f'Revenue plot {date1} - {date2}')
+    axs[0].pie(y_profit, labels=x_names, autopct='%1.1f%%', textprops={"fontsize" :8})
+    axs[0].set_title("Profit Plot", fontweight="bold")
+
+    axs[1].pie(y_revenue, labels=x_names, autopct='%1.1f%%', textprops={"fontsize" :8})
+    axs[1].set_title("Revenue Plot", fontweight="bold")
+
+    fig.suptitle("Combined profit and Revenue Plots", fontsize=14, fontweight="bold")
+    plt.tight_layout()
+    plt.show()
+    return
 
 #Buy Article - Buying an article using the item, qty, price and shelf life
 def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
@@ -146,8 +191,6 @@ def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
         f"Purchase date: [green bold]{today_formatted}[/] \n"
         f"Best by date: [red bold]{expire_date(buy_bbd)}[/]"))
     return 
-#buy_article("Tofu", 5, 7.50, 12)
-
 
 # Sell article - Selling an article using its id, quantity and price
 

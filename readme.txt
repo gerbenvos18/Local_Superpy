@@ -4,13 +4,13 @@ It also shows how the program is structered and how to use it properly.
 This program represents the inventory management system of a supermarket.
 The program is built as a CLI tool which uses csv and text files to store and retrieve data from.
 To start the program make sure you're having the Superpy files in the cwd.
-The program is accessed by running the main.py. 
+The program is accessed by passing arguments on the main.py. 
 
 $ python -m main -h 
 
 This should give the welcoming message and then a overview of all the functions it has.
 As shown in the help section the program has a multitude of functions:
-        {report,buy,sell,revenue,profit,old stock,set_date,current_date}
+        {report,buy,sell,revenue,profit,set_date,current_date}
 Each function has a built in help section to guide the user along. 
 
 The code itself is structured as follows:
@@ -22,10 +22,8 @@ The code itself is structured as follows:
 The program makes use of the rich and rich argparse module to give it a more userfriendly experience.
 The latter part of this readme will show the features of the tool with examples:
 
-
 All Positional Arguments:
   {report, buy, sell, revenue, profit, set_date, current_date}
-
     
 
 1. report              Report about current inventory
@@ -55,13 +53,13 @@ $ python -m main buy Grape 1.50 14 8
 │ Best by date: 29-01-2024          │
 ╰───────────────────────────────────╯
 
-3. sell                Sell item from the store, specify item_id, amount, price 
+3. sell                Sell an item from the store, specify it's item_id, amount and price 
 $ python -m main sell [integer] [integer] [float]
 $ python -m main sell 18 10 12
 
 You've sold the last amount of Pancakes: 12
 
-Or if youve tried to sell items that are past best by date:
+Or if you've tried to sell items that are past best by date:
 
 The Pancakes you've tried to sell are past bbd!
 
@@ -106,7 +104,7 @@ $ python -m main set_date 5
 
 Superpy's working date is set to: 10-02-2024
 
-7. current_date        Set date to current date
+7. current_date        Set date to current date used by Superpy
 
 $ python -m main current_date
 
