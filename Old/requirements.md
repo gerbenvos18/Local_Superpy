@@ -58,8 +58,8 @@ Wees creatief en minimaal:
     - Een andere zelf bedachte feature. X
 
 8. Afronding:
-    - Voeg een klein rapport van 300 woorden toe dat 3 technische elementen van je programma die noemenswaardig zijn.
-    - Leg uit welk probleem ze oplossen en waarom je zo hebt geimplementeerd
-    - Dit verslag inleveren als report.md 
-    - Je mag markdown gebruiken om de report mooi weer te geven. 
+    - Voeg een klein rapport van 300 woorden toe dat 3 technische elementen van je programma die noemenswaardig zijn. X
+    - Leg uit welk probleem ze oplossen en waarom je zo hebt geimplementeerd X
+    - Dit verslag inleveren als report.md  X
+    - Je mag markdown gebruiken om de report mooi weer te geven.  X
 

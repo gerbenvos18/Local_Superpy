@@ -34,7 +34,7 @@ def main():
                                      formatter_class=RichHelpFormatter)
     subparser = parser.add_subparsers(dest="command")
       
-# Commando report:
+# Commando's used in report:
     # $ python -m main report
     # $ python -m main report -h
     # $ python -m main buy Grape 1.50 14 8
@@ -46,8 +46,6 @@ def main():
     # $ python -m main current_date
     # $ python -m main profit 14-01-2024 18-01-2024
     # $ python -m main plot 14-01-2024 18-01-2024
-
-    # Idee weggooien van alle artikelen die over de datum zijn 
 
     report_parser = subparser.add_parser("report", help="Report about current inventory", formatter_class=RichHelpFormatter)
 
@@ -78,9 +76,6 @@ def main():
     set_date_parser.add_argument("days", type=int, help="Set date forward or revert in days")
 
     current_date_parser = subparser.add_parser("current_date", help="Set date to current date", formatter_class=RichHelpFormatter)
-
-    #time_parser.add_argument("live_date", type=str, help="Set date back to realtime date")
-
 
     args = parser.parse_args()
 
@@ -125,6 +120,8 @@ def main():
     if args.command == "current_date":
         set_current_date()
         return
+    
+    ## Command plot pie chart of revenue and profit
 
     if args.command == "plot":
         plot_revenue_profit(date1=args.start_date_plot, date2=args.end_date_plot)

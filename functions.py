@@ -1,4 +1,4 @@
-# Functies gebruikt in main
+# Functions used in main. 
 
 import csv
 import datetime
@@ -15,18 +15,19 @@ from rich.traceback import install
 today_datetime = datetime.datetime.today()
 time_notation = "%d-%m-%Y"
 today_formatted = today_datetime.strftime(time_notation)
-install()   #Console log from rich module
+install()   #Console log from rich module for easier debugging
 
 class Article():
     buy_date = today_formatted
     def __init__(self, name, price, qty, shelf_life):
-        self.name = name                #Name of the article
-        self.price = price              #Total price for products 
-        self.qty = qty                  #Amount bought
-        self.shelf_life = shelf_life    #Shelf life of article in days
-        self.bbd_date = expire_date(shelf_life) #Bbd 
+        self.name = name                            #Name of the article
+        self.price = price                          #Total price for products 
+        self.qty = qty                              #Amount bought
+        self.shelf_life = shelf_life                #Shelf life of article in days
+        self.bbd_date = expire_date(shelf_life)     #Bbd 
 
 # Read current date from txt file:
+        
 def read_date():
     with open("time.txt", "r") as file:
         current_date = file.readline()
@@ -41,19 +42,20 @@ def id_generator():
         reader = csv.DictReader(file)
         for row in reader:
             existing_ids.add(int(row["id"]))
-    random_id = random.choice([x for x in range(0,51) if x not in existing_ids])
+    random_id = random.choice([x for x in range(0,101) if x not in existing_ids])
     return random_id
 
+## Random Id generator used in the sales.csv 
 def id_generator_sales():
     existing_ids_sales = set()
     with open('sales.csv', mode='r', newline='') as file:
         reader = csv.DictReader(file)
         for row in reader:
             existing_ids_sales.add(int(row["sales_id"]))
-    random_id_sales = random.choice([x for x in range(100,201) if x not in existing_ids_sales])
+    random_id_sales = random.choice([x for x in range(101,201) if x not in existing_ids_sales])
     return random_id_sales
 
-#Used to calculate the shelf_life
+## Calculting the shelf_life calculated by giving days 
 def expire_date(days):                      
     with open('time.txt', 'r') as file:
         current_date = file.readline()
@@ -87,9 +89,9 @@ def report_inventory():
         console.print(table_inventory)
     return
 
-#Report revenue - Print the revenue of a given date or timeslot  
+#Report revenue - Print the revenue between 2 given dates  
 def report_revenue(date1, date2):
-    revenue_sorted = 0.00
+    revenue_sorted = 0.00 #Empty value to store revenue in
     console = Console()
     start_date = datetime.datetime.strptime(date1, time_notation)
     end_date = datetime.datetime.strptime(date2, time_notation)
@@ -106,9 +108,9 @@ def report_revenue(date1, date2):
     return revenue_sorted
 
 
-#Report profit - print the profit of a given date or timeslot
+#Report profit - print the profit between 2 given dates
 def report_profit(date1, date2):
-    profit_sorted = 0.00
+    profit_sorted = 0.00 #Empty value to store proft in
     console = Console()
     start_date = datetime.datetime.strptime(date1, time_notation)
     end_date = datetime.datetime.strptime(date2, time_notation)
@@ -125,6 +127,7 @@ def report_profit(date1, date2):
                     f"[bold]Total Profit:[/] [green bold]€{profit_sorted}"))
     return profit_sorted
 
+##Plot revenue and profit in pie charts:
 def plot_revenue_profit(date1, date2):
     fieldnames_sales = ["sales_id","product_name",
                        "quantity","buy_price","sales_price",
@@ -134,14 +137,14 @@ def plot_revenue_profit(date1, date2):
     y_revenue = []
     start_date = datetime.datetime.strptime(date1, time_notation)
     end_date = datetime.datetime.strptime(date2, time_notation)
-    filtered_rows = []
-    with open("sales.csv", "r", newline="") as file:
+    filtered_rows = [] #Empty list to store records in
+    with open("sales.csv", "r", newline="") as file: 
         reader = csv.DictReader(file, delimiter=",")
         rows = list(reader)
         for row in rows:
             sale_date = datetime.datetime.strptime(row["sale_date"], time_notation)
             if start_date <= sale_date <= end_date:
-                filtered_rows.append(row)
+                filtered_rows.append(row) #Add all corresponding records to temporary list
 
     with open("plot.csv", "w", newline="") as new_file:
         writer = csv.DictWriter(new_file, fieldnames = fieldnames_sales, delimiter=",")
@@ -150,7 +153,7 @@ def plot_revenue_profit(date1, date2):
         for row in filtered_rows:
             x_names.append(f"{row["product_name"]} - €{row["sales_price"]}")
             y_profit.append(float(row["sales_price"]) - float(row["buy_price"]))
-            y_revenue.append(float(row["sales_price"]))
+            y_revenue.append(float(row["sales_price"])) #Add all items of temporary list to plot.csv
 
     fig, axs = plt.subplots(1, 2, figsize=(8, 4)) #Number of rows in subplot
     
@@ -162,7 +165,7 @@ def plot_revenue_profit(date1, date2):
 
     fig.suptitle(f'Revenue plot {date1} - {date2}', fontsize=14, fontweight="bold")
     plt.tight_layout()
-    plt.show()
+    plt.show()      #Plot with two subplots showing revenue and profit 
     return
 
 #Buy Article - Buying an article using the item, qty, price and shelf life
@@ -183,12 +186,12 @@ def buy_article(buy_item, buy_qty, buy_price, buy_bbd):
             "expiration_date": expire_date(buy_bbd)
         })
 
-        print(Panel(f"You bought a: [cyan bold]{buy_item}[/] \n"
+        print(Panel(f"You bought a: [cyan bold]{buy_item}[/] \n" #Confirmation stating all given input
         f"Total Price: € [yellow bold]{buy_price}[/] \n"
         f"Qty: [cyan bold]{buy_qty}[/] \n"
         f"Shelf_life: [green bold]{buy_bbd}[/] days \n"
         f"Purchase date: [green bold]{today_formatted}[/] \n"
-        f"Best by date: [red bold]{expire_date(buy_bbd)}[/]"))
+        f"Best by date: [red bold]{expire_date(buy_bbd)}[/]"))   
     return 
 
 # Sell article - Selling an article using its id, quantity and price
@@ -232,8 +235,8 @@ def sell_article(id_sell, qty_sell, price_sell):
                     rows.remove(row)
                     break
 
-        file.seek(0)
-        file.truncate()
+        file.seek(0)    #Move pointer back to the top of the file 
+        file.truncate() 
 
         writer = csv.DictWriter(file, fieldnames= reader.fieldnames, delimiter=",")
         writer.writeheader()
