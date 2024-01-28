@@ -1,22 +1,22 @@
 ### Aantekeningen 
-    Commando's uit voorbeeld:
+    Commando's uit voorbeeld: X
 
-Commando report:
-python super.py report inventory --now
-python super.py report inventory --yesterday
-python super.py report inventory --now
-python super.py report revenue --yesterday
-python super.py report revenue --today
-python super.py report revenue --date 2019-12
-python super.py report profit --today
+Commando report: X
+python super.py report inventory --now X
+python super.py report inventory --yesterday X
+python super.py report inventory --now X
+python super.py report revenue --yesterday X
+python super.py report revenue --today X
+python super.py report revenue --date 2019-12 X
+python super.py report profit --today X
 
-# Inventory is uitvoer van de inventory.csv
-# Revenue is uitvoer van de inventory.csv
+# Inventory is uitvoer van de inventory.csv X
+# Revenue is uitvoer van de inventory.csv X
 
-Commando sell:
+Commando sell: X
+python super.py sell --product-name orange --price 2 X X 
 python super.py sell --product-name orange --price 2 X
-python super.py sell --product-name orange --price 2 X
->> ERROR: Product not in stock. 
+>> ERROR: Product not in stock. X 
 
 Commando buy:
 python super.py buy --product-name orange --price 0.8 --expiration-date 2020-01-01 X

@@ -54,7 +54,7 @@ Wees creatief en minimaal:
 7. Kies twee van de volgende 4 dingen: 
     - Gebruik van de module rich.  X
     - Het import/exporteren van rapporteren van/naar formats naast CSV.
-    - Visualiseren van data met Matplotlib. 
+    - Visualiseren van data met Matplotlib. X
     - Een andere zelf bedachte feature. X
 
 8. Afronding:

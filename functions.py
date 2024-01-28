@@ -119,7 +119,7 @@ def report_profit(date1, date2):
             sale_date = datetime.datetime.strptime(row["sale_date"], time_notation)
             if start_date <= sale_date <= end_date:
                 profit = float(row["sales_price"]) - float(row["buy_price"])
-                console.print(f"Id: {row["sales_id"]} ({row["product_name"]}):  € {profit}")
+                console.print(f"ID: {row["sales_id"]} ({row["product_name"]}):  € {profit}")
                 profit_sorted += profit
         print(Panel(f"[bold]Time Period:[/] [yellow]{date1}[/] - [red]{date2}[/]\n"
                     f"[bold]Total Profit:[/] [green bold]€{profit_sorted}"))
@@ -154,14 +154,13 @@ def plot_revenue_profit(date1, date2):
 
     fig, axs = plt.subplots(1, 2, figsize=(8, 4)) #Number of rows in subplot
     
-    plt.title(f'Revenue plot {date1} - {date2}')
     axs[0].pie(y_profit, labels=x_names, autopct='%1.1f%%', textprops={"fontsize" :8})
     axs[0].set_title("Profit Plot", fontweight="bold")
 
     axs[1].pie(y_revenue, labels=x_names, autopct='%1.1f%%', textprops={"fontsize" :8})
     axs[1].set_title("Revenue Plot", fontweight="bold")
 
-    fig.suptitle("Combined profit and Revenue Plots", fontsize=14, fontweight="bold")
+    fig.suptitle(f'Revenue plot {date1} - {date2}', fontsize=14, fontweight="bold")
     plt.tight_layout()
     plt.show()
     return
@@ -232,10 +231,6 @@ def sell_article(id_sell, qty_sell, price_sell):
                                 "expiration_date": row["expiration_date"]}
                     rows.remove(row)
                     break
-
-                else:
-                    print(f"The item you want to sell is not in stock!")
-                    break  
 
         file.seek(0)
         file.truncate()

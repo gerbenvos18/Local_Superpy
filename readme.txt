@@ -1,10 +1,12 @@
 Welcome to the readme file of this Superpy project!
+
 This readme file gives a basic user guide for the program.
 It also shows how the program is structered and how to use it properly.
 This program represents the inventory management system of a supermarket.
 The program is built as a CLI tool which uses csv and text files to store and retrieve data from.
 To start the program make sure you're having the Superpy files in the cwd.
-The program is accessed by passing arguments on the main.py. 
+The csv's are filled with a couple of examples.
+The program is accessed by passing arguments in the main.py. 
 
 $ python -m main -h 
 
@@ -14,12 +16,13 @@ As shown in the help section the program has a multitude of functions:
 Each function has a built in help section to guide the user along. 
 
 The code itself is structured as follows:
- - A main file with the command parser: "main.py"
- - A functions file to store all logic: "functions.py". 
- - Two csv files to keep track of the inventory and sales: "inventory.csv" and "sales.csv"
+ - The main file with the command parser: "main.py"
+ - A file to store all logic: "functions.py". 
+ - Three csv files to keep track of the inventory and sales: "inventory.csv", "sales.csv" and "plot.csv"
  - The date the program perceives is stored in a text file: "time.txt"
 
 The program makes use of the rich and rich argparse module to give it a more userfriendly experience.
+In the "Old" directory all of the files used but not needed to run the program can be found. 
 The latter part of this readme will show the features of the tool with examples:
 
 All Positional Arguments:
@@ -83,12 +86,13 @@ ID: 199 (Grapes) € 20.0
 $ python -m main profit [DD-MM-YYYY] [DD-MM-YYYY]
 $ python -m main profit 16-01-2024 17-01-2024
 
-Id: 148 (Pears):  € 11.25
-Id: 176 (Apples):  € 19.55
-Id: 125 (Pears):  € 19.25
-Id: 143 (Grapes):  € 8.5
-Id: 145 (Apples):  € 9.5
-Id: 134 (Grape):  € 8.5
+ID: 148 (Pears):  € 11.25
+ID: 176 (Apples):  € 19.55
+ID: 125 (Pears):  € 19.25
+ID: 143 (Grapes):  € 8.5
+ID: 145 (Apples):  € 9.5
+ID: 134 (Grape):  € 8.5
+
 ╭──────────────────────────────────────────╮
 │ Time Period: 16-01-2024 - 17-01-2024     │
 │ Total Profit: €76.55                     │
@@ -100,7 +104,7 @@ $ python -m main set_date -5
 
 Superpy's working date is set to: 10-02-2024
 
-$ python -m main set_date 5
+$ python -m main set_date 8
 
 Superpy's working date is set to: 10-02-2024
 
@@ -109,3 +113,10 @@ Superpy's working date is set to: 10-02-2024
 $ python -m main current_date
 
 Superpy's working date is set to: 22-01-2024
+
+8. plot       Plot the revenue and profit between two dates
+
+python -m main plot [string] [string]
+$ python -m main plot 14-01-2024 18-01-2024
+
+-> Revenue_profit_plot.png

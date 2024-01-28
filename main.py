@@ -1,12 +1,10 @@
 # Imports
+
 from argparse import *
 import csv
 import random
 from datetime import date
 from functions import *
-#from functions import superpy_date
-
-#https://www.youtube.com/watch?v=hkii1p7jPFo Search through directories to find keywords
 
 from rich_argparse import RichHelpFormatter
 from rich.pretty import pprint
@@ -47,6 +45,7 @@ def main():
     # $ python -m main set_date 20
     # $ python -m main current_date
     # $ python -m main profit 14-01-2024 18-01-2024
+    # $ python -m main plot 14-01-2024 18-01-2024
 
     # Idee weggooien van alle artikelen die over de datum zijn 
 
